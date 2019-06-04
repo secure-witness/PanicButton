@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/colorBackground"
+        android:id="@+id/ScrollView01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColor"
+                android:textAlignment="center"
+                android:text="DATOS DEL PERFIL"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:textSize="15pt">
+            </TextView>
+            <!--///////////////////////////////Nombre//////////////////////////////////////////-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColor"
+                android:text="Nombre"
+                android:textSize="10pt">
+            </TextView>
+            <EditText
+                android:id="@+id/editNombreC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre Completo"
+                android:textColorHint="@color/colorTextColorDark"
+                android:textColor="@color/colorTextColor"
+                android:backgroundTint="@color/colorIcon"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="30dp"></EditText>
+
+            <!--////////////////////////////////Direccion Casa//////////////////////////////////////////-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColor"
+                android:text="Dirección de Casa"
+                android:textSize="10pt">
+            </TextView> >
+            <EditText
+                android:id="@+id/editCalleC"
+                android:hint="Calle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorTextColorDark"
+                android:textColor="@color/colorTextColor"
+                android:backgroundTint="@color/colorIcon"
+                android:inputType="textPersonName"></EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/editNumC"
+                    android:hint="Num"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorTextColorDark"
+                    android:textColor="@color/colorTextColor"
+                    android:backgroundTint="@color/colorIcon"
+                    android:inputType="number"></EditText>
+                <EditText
+                    android:id="@+id/editNCPC"
+                    android:hint="CP"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorTextColorDark"
+                    android:textColor="@color/colorTextColor"
+                    android:backgroundTint="@color/colorIcon"
+                    android:inputType="textPersonName"></EditText>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editDelC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Alcaldía"
+                android:textColorHint="@color/colorTextColorDark"
+                android:textColor="@color/colorTextColor"
+                android:backgroundTint="@color/colorIcon"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="30dp"></EditText>
+            <!--Put form controls here-->
+
+            <!--////////////////////////////////Direccion Trabajo//////////////////////////////////////////-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColor"
+                android:text="Dirección de Trabajo"
+                android:textSize="10pt">
+            </TextView>
+            <EditText
+                android:id="@+id/editCalleT"
+                android:hint="Calle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorTextColorDark"
+                android:textColor="@color/colorTextColor"
+                android:backgroundTint="@color/colorIcon"
+                android:inputType="textPersonName"></EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/editNumT"
+                    android:hint="Num"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorTextColorDark"
+                    android:textColor="@color/colorTextColor"
+                    android:backgroundTint="@color/colorIcon"
+                    android:inputType="number"></EditText>
+                <EditText
+                    android:id="@+id/editNCPT"
+                    android:hint="CP"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorTextColorDark"
+                    android:textColor="@color/colorTextColor"
+                    android:backgroundTint="@color/colorIcon"
+                    android:inputType="textPersonName"></EditText>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editDelT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Alcaldía"
+                android:textColorHint="@color/colorTextColorDark"
+                android:textColor="@color/colorTextColor"
+                android:backgroundTint="@color/colorIcon"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="30dp"></EditText>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextColor"
+                android:text="Teléfono de Alertas"
+                android:textSize="10pt">
+            </TextView>
+            <EditText
+                android:id="@+id/ediTel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Teléfono"
+                android:textColorHint="@color/colorTextColorDark"
+                android:textColor="@color/colorTextColor"
+                android:backgroundTint="@color/colorIcon"
+                android:inputType="textPersonName"></EditText>
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="GUARDAR DATOS"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"
+                android:background="@color/colorTextColor"/>
+
+        </LinearLayout>
+    </ScrollView>

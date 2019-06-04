@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Main2Activity"
+    tools:showIn="@layout/app_bar_main2"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="194dp">
+
+        <TextView
+            android:id="@+id/mensaje_id"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/txtviewcustom"
+            android:drawableLeft="@drawable/iconlocal"
+            android:layout_marginBottom="10dp"
+            android:text="Ubicación"
+            android:textColor="@color/colorBackground" />
+
+        <TextView
+            android:id="@+id/mensaje_id2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginHorizontal="20dp"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/txtviewcustom"
+            android:drawableLeft="@drawable/icondir"
+            android:text="Dirección"
+            android:textColor="@color/colorBackground"
+            app:layout_constraintTop_toBottomOf="@+id/mensaje_id" />
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:background="@drawable/redondo"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/cutomboton" />
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
