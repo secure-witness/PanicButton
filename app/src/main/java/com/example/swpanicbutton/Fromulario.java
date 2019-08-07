@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 public class Fromulario extends AppCompatActivity {
     SharedPreferences preferencias;
 Button Guardar;
-String txt;
+String txt,nombre,callec,numc,cpc,delc,callet,numt,cpt,delt,tel,mens;
 EditText Nombre,Callec,Numc,Cpc,Delc,Callet,Numt,Cpt,Delt,Tel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,29 @@ EditText Nombre,Callec,Numc,Cpc,Delc,Callet,Numt,Cpt,Delt,Tel;
                 txt = ((EditText)findViewById(R.id.ediTel)).getText().toString();
                 myEditor.putString("tel",txt);
                 myEditor.commit();
+
+                nombre=preferencias.getString("nombre", "").toString();
+                callec=preferencias.getString("callec", "").toString();
+                numc=preferencias.getString("numc", "").toString();
+                cpc=preferencias.getString("cpc", "").toString();
+                delc=preferencias.getString("delc", "").toString();
+
+                callet=preferencias.getString("callet", "").toString();
+                numt=preferencias.getString("numt", "").toString();
+                cpt=preferencias.getString("cpt", "").toString();
+                delt=preferencias.getString("delt", "").toString();
+                tel=preferencias.getString("tel", "").toString();
+                try{
+                SmsManager smgr = SmsManager.getDefault();
+                mens = "*p"+ nombre +"*c"+ callec+"*n"+numc+"*cp"+cpc+"*d"+delc;
+                smgr.sendTextMessage(tel,null,mens,null,null);
+
+                mens = "*t"+callet+"*n"+numt+"*cp"+cpt+"*d"+delt;
+                smgr.sendTextMessage(tel,null,mens,null,null);
+
+                }catch (Exception e){}
+
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
