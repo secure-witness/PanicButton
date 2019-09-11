@@ -33,7 +33,9 @@ public class MyReceiver extends BroadcastReceiver {
                     Toast.makeText(context, "Localización enviada al C-5", Toast.LENGTH_LONG).show();
                     SmsManager sms = SmsManager.getDefault();
                     String mens2 = "lvlong " + longitud + "lat " + latitud;
-                    sms.sendTextMessage("+13602007275", null, mens2, null, null);
+
+                    sms.sendTextMessage("5540769779", null, mens2, null, null);
+
                 }else {
 
                     Toast.makeText(context, "Mensaje entrante"+body, Toast.LENGTH_LONG).show();
