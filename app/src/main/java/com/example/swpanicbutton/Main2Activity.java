@@ -1,6 +1,8 @@
 package com.example.swpanicbutton;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +22,9 @@ import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
 import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -42,18 +46,38 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.client.ClientProtocolException;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int MY_PERMISSIONS_REQUEST_RECEIVE_SMS = 0;
     ImageButton btnSms;
     SharedPreferences preferencias;
     TextView mensaje1;
     TextView mensaje2;
-    String latitud,longitud,direccion,IP;
+    String direccion,IP,dircasa,dirtrabajo,nombre;
+    private static String longitud, latitud;
+
+    public static String getLongitud(){
+        return longitud;
+    }
+
+    public static String getLatitud(){
+        return latitud;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +87,7 @@ public class Main2Activity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -76,10 +99,11 @@ public class Main2Activity extends AppCompatActivity
         btnSms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+
+
                 ConnectivityManager connMgr = (ConnectivityManager)
                         getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
                 if(networkInfo != null && networkInfo.isConnected()){
                     String url = "http://"+IP+"/led1";
                     //new SolicitaDatos().execute(url);
@@ -107,46 +131,56 @@ public class Main2Activity extends AppCompatActivity
                 else{
                     Toast.makeText(Main2Activity.this,"Sin Internet",Toast.LENGTH_LONG).show();
                 }
-                String mens1 = "Dirección de Casa" + "\n" +
-                        "Calle: "+ preferencias.getString("callec", "unknown") + " # "+ preferencias.getString("numc", "unknown")+
+                nombre=preferencias.getString("nombre", "");
+                dircasa="Calle: "+ preferencias.getString("callec", "unknown") + " # "+ preferencias.getString("numc", "unknown")+
                         " CP "+ preferencias.getString("cpc", "unknown") + " Del. " + preferencias.getString("delc", "unknown");
-
-                String mens2 = "Dirección de Trabajo" + "\n" +
-                        "Calle: "+ preferencias.getString("callet", "unknown") + " # "+ preferencias.getString("numt", "unknown")+
+                dirtrabajo="Calle: "+ preferencias.getString("callet", "unknown") + " # "+ preferencias.getString("numt", "unknown")+
                         " CP "+ preferencias.getString("cpt", "unknown") + " Del. " + preferencias.getString("delt", "unknown");
+                String mens1 = "Dirección de Casa" + "\n" + dircasa;
+
+                //String mens2 = "Dirección de Trabajo" + "\n" + dirtrabajo;
+                String mens2 = "long " + longitud + "lat " + latitud;
+
                 String tel= preferencias.getString("tel", "unknown").toString();
+
                 try{
                     SmsManager smgr = SmsManager.getDefault();
-                    smgr.sendTextMessage(tel,null,"Alerta de Panico de "+ preferencias.getString("nombre", "") + "\n" + direccion,null,null);
+                    /*smgr.sendTextMessage(tel,null,"Alerta de Panico de "+ nombre + "\n" + direccion,null,null);
                     smgr.sendTextMessage(tel,null,"https://www.google.com/maps/search/?api=1&query="+latitud+","+longitud,null,null);
                     smgr.sendTextMessage(tel,null,mens1,null,null);
-                    smgr.sendTextMessage(tel,null, mens2,null,null);
-                    Toast.makeText(Main2Activity.this, "SMS Sent Successfully", Toast.LENGTH_SHORT).show();
+                    smgr.sendTextMessage(tel,null, mens2,null,null);*/
+                    smgr.sendTextMessage(tel,null,mens2,null,null);
+                    Toast.makeText(Main2Activity.this, "SMS Sent Successfully!", Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e){
                     Toast.makeText(Main2Activity.this, "SMS Failed to Send, Please try again", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Main2Activity.this, tel, Toast.LENGTH_SHORT).show();
                 }
+
+               // new Insertar(Main2Activity.this).execute();
             }
         });
 
         ////////////////////////// Solicitud de permisos SMS ////////////////////////////////////////////////////////////////////
+
         if(ActivityCompat.checkSelfPermission(Main2Activity.this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(Main2Activity.this,new String[]
                     { Manifest.permission.SEND_SMS,},1000);
         }else{
-        }
+        };
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////777
 
                 ///////////////////////////Solicitud de permisos LOCATION ////////////////////////////////////////////////////77
-                if (ActivityCompat.checkSelfPermission(Main2Activity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Main2Activity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(Main2Activity.this, new String[]{
-                            Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
-                }
-                else {
-                    locationStart();
-                }
+
+
+
+        if (ActivityCompat.checkSelfPermission(Main2Activity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Main2Activity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Main2Activity.this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
+        }
+        else {
+            locationStart();
+        }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
 
     }
@@ -335,6 +369,7 @@ public class Main2Activity extends AppCompatActivity
 
         }
     }
+    ///////////////////////////////////////////////////////////////////////////
     private class SolicitaDatos extends AsyncTask<String, Void, String> {
 
         @Override
@@ -356,4 +391,70 @@ public class Main2Activity extends AppCompatActivity
             }
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////Clase insertar datos metodo POST ////////////////////////////////////
+    public boolean insertar() {
+        HttpClient httpClient;
+        List<NameValuePair> nameValuePairs;
+        HttpPost httpPost;
+        httpClient = new DefaultHttpClient();
+        httpPost = new HttpPost("http://192.168.100.217/webapp/alerta.php");
+        //Se añaden los datos de la alerta
+        nameValuePairs = new ArrayList<NameValuePair>(6);
+        nameValuePairs.add(new BasicNameValuePair("longitud", longitud));
+        nameValuePairs.add(new BasicNameValuePair("latitud", latitud));
+        nameValuePairs.add(new BasicNameValuePair("nombre", nombre));
+        nameValuePairs.add(new BasicNameValuePair("direccion", direccion));
+        nameValuePairs.add(new BasicNameValuePair("dircasa", dircasa));
+        nameValuePairs.add(new BasicNameValuePair("dirtrabajo", dirtrabajo));
+
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httpClient.execute(httpPost);
+            return true;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////CONSULTA ASINCRONA PARA AGREGAR DATOS A BD ////////////////////////////////
+    class Insertar extends AsyncTask<String,String,String>{
+
+        private Activity context;
+
+        Insertar(Activity context){
+            this.context=context;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            /* TODO Auto-generated method stub */
+            if(insertar())
+                context.runOnUiThread(new Runnable(){
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        Toast.makeText(context, "Alerta en BD", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+            else
+                context.runOnUiThread(new Runnable(){
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        Toast.makeText(context, "No se capturo alerta", Toast.LENGTH_LONG).show();
+                    }
+                });
+            return null;
+        }
+    }
+
+
+
 }
