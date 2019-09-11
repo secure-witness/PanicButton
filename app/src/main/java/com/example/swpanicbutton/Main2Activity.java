@@ -151,6 +151,7 @@ public class Main2Activity extends AppCompatActivity
                     smgr.sendTextMessage(tel,null, mens2,null,null);*/
                     smgr.sendTextMessage(tel,null,mens2,null,null);
                     Toast.makeText(Main2Activity.this, "SMS Sent Successfully!", Toast.LENGTH_SHORT).show();
+
                 }
                 catch (Exception e){
                     Toast.makeText(Main2Activity.this, "SMS Failed to Send, Please try again", Toast.LENGTH_SHORT).show();
@@ -162,12 +163,14 @@ public class Main2Activity extends AppCompatActivity
 
         ////////////////////////// Solicitud de permisos SMS ////////////////////////////////////////////////////////////////////
 
+
         if(ActivityCompat.checkSelfPermission(Main2Activity.this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(Main2Activity.this,new String[]
                     { Manifest.permission.SEND_SMS,},1000);
         }else{
         };
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////777
 
                 ///////////////////////////Solicitud de permisos LOCATION ////////////////////////////////////////////////////77
